@@ -4,8 +4,8 @@
 
 int main() {
 
-    double a = 45.62;
-    double b = 15.5;
+    double a = 0.1;
+    double b = 0.2;
     double suma = a + b;
 
     printf("a:%.17f\n", a);
