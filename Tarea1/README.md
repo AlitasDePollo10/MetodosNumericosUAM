@@ -5,6 +5,7 @@ UEA 1151039 · Métodos Numéricos en Ingeniería · Trimestre 26-O ·
 ---
 | **Licenciatura** | Ingeniería en Computación |  
 | --- | --- |
+| **Nombre** | Christian Ali Najera Mayorga |
 | **Matrícula** | 2252005719 |
 | **Profesor** | Gabriel Hurtado Avilés |
 | **Fecha** | 10 de octubre de 2026 |
