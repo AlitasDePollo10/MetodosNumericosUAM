@@ -78,4 +78,3 @@ También pueden ser aplicados en la robótica en el cálculo de cinemática inve
 * Kincaid, D., & Cheney, W. (2012). *Análisis Numérico y Computación* (6a ed.). Cengage Learning.
 * Nieves, A., & Domínguez, F. C. (2014). *Métodos Numéricos Aplicados a la Ingeniería*. Grupo Editorial Patria.
 * Quarteroni, A., & Saleri, F. (2009). *Cálculo Científico con MATLAB y Octave*. Springer.
->>>>>>> a1648fec0ecdf02962b19bacdf710205136a2138
