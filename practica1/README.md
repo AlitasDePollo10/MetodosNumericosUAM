@@ -16,7 +16,7 @@
 | Cifras | Criterio de Scarborough | Términos necesarios | Aproximación | Error verdadero | 
 | ----- | ----- | ----- | ----- | ----- | 
 | 6 | 0.0005% | 9 | 1.648721265035962 | 3.43549e-07% | 
-| 17 | $5 \times 10^{-14}\%$ | 16 | 1.648721270700128 | 2.69354e-14% | 
+| 17 | 5X10^-14% | 16 | 1.648721270700128 | 2.69354e-14% | 
 
 
 *Figura 1. Ejecución con 6 cifras significativas.*
@@ -44,6 +44,6 @@ El programa (Figura 2) nos muestra que en realidad son correctas de 15 a 16 cifr
 
 Por otro lado, $0.1 + 0.2 = 0.30000000000000004$ porque la memoria guarda los números en binario, no en base 10.
 ## Referencias
-Chapra, S. C., & Canale, R. P. (2015). Métodos Numéricos para Ingenieros (7a ed.). McGraw-Hill. Capítulo 3,
+* Chapra, S. C., & Canale, R. P. (2015). Métodos Numéricos para Ingenieros (7a ed.). McGraw-Hill. Capítulo 3,
 ejemplo 3.2, y capítulo 4.
-[2] Burden, R. L., & Faires, J. D. (2011). Análisis Numérico (9a ed.). Cengage Learning. Capítulo 1.
+* Burden, R. L., & Faires, J. D. (2011). Análisis Numérico (9a ed.). Cengage Learning. Capítulo 1.
