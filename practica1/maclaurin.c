@@ -22,7 +22,7 @@ static const int CIFRAS = 3;   /* cifras significativas que se piden    */
 #define NMAX 30                /* máximo de términos                    */
 /* ================================================================= */
 
-#define ENCABEZADO "términos         aproximación        et (%)        ea (%)"
+#define ENCABEZADO "terminos         aproximacion        et (%)        ea (%)"
 
 int main(void)
 {
@@ -31,7 +31,7 @@ int main(void)
     double aprox = 0.0, anterior, termino = 1.0, ea, et;
     int n = 0;
 
-    printf("Práctica 1 · Serie de Maclaurin de e^x · C\n");
+    printf("Practica 1 Serie de Maclaurin de e^x · C\n");
     printf("x = %g, %d cifras significativas: es = %g %% (criterio de Scarborough)\n",
            X, CIFRAS, es);
     printf("Valor verdadero: exp(%g) = %.15f\n\n", X, verdadero);
@@ -41,10 +41,9 @@ int main(void)
         anterior = aprox;
         aprox = aprox + termino;
         n = n + 1;
-        /* COMPLETAR 1: el término siguiente, x^n / n!, a partir del anterior. */
-        termino = 0.0;   /* <- sustituya 0.0 por la expresión correcta */
-        /* COMPLETAR 2: el error relativo aproximado, en %. Ojo: fabs, no abs. */
-        ea = 0.0;   /* <- sustituya 0.0 por la expresión correcta */
+
+        termino = termino * X / n;
+        ea = fabs((aprox - anterior) / aprox) * 100.0;
         et = fabs((verdadero - aprox) / verdadero) * 100.0;
         if (n == 1)
             printf("%8d %20.15f %13.6g %13s\n", n, aprox, et, "-");
@@ -54,9 +53,10 @@ int main(void)
 
     printf("\n");
     if (ea <= es)
-        printf("Se alcanzó ea <= es con %d términos.\n", n);
+        printf("Se alcanzo ea <= es con %d terminos.\n", n);
     else
-        printf("No se alcanzó la tolerancia en %d términos.\n", NMAX);
-    printf("Aproximación: %.15f   error verdadero: %g %%\n", aprox, et);
+        printf("No se alcanzo la tolerancia en %d terminos.\n", NMAX);
+    printf("Aproximacion: %.15f   error verdadero: %g %%\n", aprox, et);
+
     return 0;
 }
