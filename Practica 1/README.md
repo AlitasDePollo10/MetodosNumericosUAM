@@ -20,8 +20,11 @@
 
 
 *Figura 1. Ejecución con 6 cifras significativas.*
+<img width="1409" height="490" alt="Captura de pantalla 2026-10-12 185349" src="https://github.com/user-attachments/assets/8555498f-ba63-4922-9c73-a4d001b3cd50" />
 
- *Figura 2. Ejecución con 17 cifras significativas.*
+*Figura 2. Ejecución con 17 cifras significativas.*
+<img width="1639" height="559" alt="Captura de pantalla 2026-10-12 185647" src="https://github.com/user-attachments/assets/36fcde4c-fc41-4c1f-88e0-1125caf4d615" />
+
 
 ### 1.- ¿Cuántos términos hacen falta con 3, 6 y 17 cifras?
 
