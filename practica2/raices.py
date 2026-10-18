@@ -203,19 +203,86 @@ def graficar(resultados, carpeta="img"):
        vertical en escala logarítmica y la tolerancia como línea horizontal.
     """
     os.makedirs(carpeta, exist_ok=True)
-    # COMPLETAR: las dos figuras que se describen arriba.
-    #
-    # Cada elemento de `resultados` es un diccionario con:
-    #   r["nombre"]    nombre del método
-    #   r["x"]         raíz aproximada
-    #   r["k"]         iteraciones realizadas
-    #   r["historia"]  lista de tuplas (k, x_k, ea_k); en la primera fila de los
-    #                  métodos cerrados ea_k vale None, y no se grafica.
-    #
-    # Funciones útiles: plt.figure, plt.plot, plt.semilogy, plt.axhline,
-    # plt.xlabel, plt.ylabel, plt.title, plt.legend, plt.grid, plt.savefig y
-    # plt.close. Guarde con plt.savefig(os.path.join(carpeta, "funcion.png")).
-    print("graficar(): falta completar; todavía no se generan las figuras.")
+
+    # -------------------------------------------------------------------------
+    # Figura 1: Gráfica de la función f(x) y las raíces encontradas
+    # -------------------------------------------------------------------------
+    plt.figure(figsize=(9, 5))
+
+    # Muestreo continuo de f(c) en el intervalo [A, B]
+    puntos = 400
+    x_vals = [A + i * (B - A) / (puntos - 1) for i in range(puntos)]
+    y_vals = [f(x) for x in x_vals]
+
+    # Línea base f(c) y eje y = 0
+    plt.plot(x_vals, y_vals, label=r"$f(c)$", color="black", linewidth=1.5)
+    plt.axhline(0, color="gray", linestyle="--", linewidth=1.0)
+
+    # Marcar la raíz obtenida por cada método
+    marcadores = ["o", "s", "^", "D", "v"]
+    for r, marker in zip(resultados, marcadores):
+        plt.plot(
+            r["x"],
+            f(r["x"]),
+            marker=marker,
+            linestyle="None",
+            markersize=7,
+            label=f"{r['nombre']} (x={r['x']:.4f})"
+        )
+
+    plt.xlabel("c (kg/s)")
+    plt.ylabel("f(c)")
+    plt.title("Raíces de la ecuación no lineal f(c) = 0")
+    plt.grid(True, linestyle=":", alpha=0.6)
+    plt.legend(loc="best")
+    plt.tight_layout()
+    plt.savefig(os.path.join(carpeta, "funcion.png"), dpi=300)
+    plt.close()
+
+    # -------------------------------------------------------------------------
+    # Figura 2: Gráfica de convergencia (Error aproximado ea % vs Iteración k)
+    # -------------------------------------------------------------------------
+    plt.figure(figsize=(9, 5))
+
+    for r, marker in zip(resultados, marcadores):
+        # Filtrar iteraciones válidas donde ea no sea None ni 0 (para escala log)
+        k_vals = []
+        ea_vals = []
+        for item in r["historia"]:
+            k, _, ea = item
+            if ea is not None and ea > 0:
+                k_vals.append(k)
+                ea_vals.append(ea)
+
+        if k_vals:
+            plt.semilogy(
+                k_vals,
+                ea_vals,
+                marker=marker,
+                linestyle="-",
+                linewidth=1.2,
+                label=r["nombre"]
+            )
+
+    # Línea horizontal de tolerancia objetivo
+    plt.axhline(
+        TOL,
+        color="red",
+        linestyle="--",
+        linewidth=1.2,
+        label=f"Tolerancia ({TOL}%)"
+    )
+
+    plt.xlabel("Iteración (k)")
+    plt.ylabel(r"Error relativo aproximado $e_a$ (%)")
+    plt.title("Convergencia del error aproximado por método")
+    plt.grid(True, which="both", linestyle=":", alpha=0.6)
+    plt.legend(loc="best")
+    plt.tight_layout()
+    plt.savefig(os.path.join(carpeta, "convergencia.png"), dpi=300)
+    plt.close()
+
+    print(f"Figuras guardadas exitosamente en la carpeta '{carpeta}/'.")
 
 
 def main():

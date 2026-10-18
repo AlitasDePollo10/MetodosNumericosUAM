@@ -65,11 +65,9 @@ typedef struct {
     int    ok;      /* 1 si se alcanzó la tolerancia  */
 } Resultado;
 
-/* Error relativo aproximado, en porcentaje: |(nuevo - anterior) / nuevo| · 100. */
 static double error_aprox(double nuevo, double anterior)
 {
-    /* COMPLETAR 1. Ojo: en C, abs() es para enteros; para double se usa fabs(). */
-    return 0.0;   /* <- sustituya 0.0 por la expresión correcta */
+    return fabs((nuevo - anterior) / nuevo)*100;
 }
 
 static void fila_cerrado(int k, double a, double b, double x, double ea, int con_ea)
@@ -95,8 +93,6 @@ static void cierre(Resultado r)
     printf("\n");
 }
 
-/* Bisección: parte el intervalo a la mitad y conserva la mitad con cambio de signo.
- * Este método está completo: sirve de modelo para los otros cuatro. */
 static Resultado biseccion(double a, double b)
 {
     Resultado r = {0.0, 0.0, 0, 0};
@@ -118,7 +114,6 @@ static Resultado biseccion(double a, double b)
     return r;
 }
 
-/* Falsa posición: corta la recta que une (a, f(a)) y (b, f(b)) con el eje x. */
 static Resultado falsa_posicion(double a, double b)
 {
     Resultado r = {0.0, 0.0, 0, 0};
@@ -127,8 +122,7 @@ static Resultado falsa_posicion(double a, double b)
     printf("2. Falsa posición en [%g, %g]\n", a, b);
     printf("%s\n", ENC_CERRADO);
     for (int k = 1; k <= NMAX; ++k) {
-        /* COMPLETAR 2: el punto donde la recta corta el eje x. */
-        x = 0.0;   /* <- sustituya 0.0 por la expresión correcta */
+        x = b - (f(b) * (a - b)) / (f(a) - f(b));
         if (k > 1) ea = error_aprox(x, x_ant);
         fila_cerrado(k, a, b, x, ea, k > 1);
         r.x = x; r.ea = ea; r.k = k;
@@ -141,7 +135,6 @@ static Resultado falsa_posicion(double a, double b)
     return r;
 }
 
-/* Punto fijo: repite x <- g(x). */
 static Resultado punto_fijo(double x)
 {
     Resultado r = {x, 0.0, 0, 0};
@@ -151,8 +144,7 @@ static Resultado punto_fijo(double x)
     printf("%s\n", ENC_ABIERTO);
     fila_abierto(0, x, 0.0, 0);
     for (int k = 1; k <= NMAX; ++k) {
-        /* COMPLETAR 3: la siguiente aproximación. */
-        x_nuevo = 0.0;   /* <- sustituya 0.0 por la expresión correcta */
+        x_nuevo = g(x);
         ea = error_aprox(x_nuevo, x);
         x = x_nuevo;
         fila_abierto(k, x, ea, 1);
@@ -163,7 +155,6 @@ static Resultado punto_fijo(double x)
     return r;
 }
 
-/* Newton-Raphson: el cero de la recta tangente en x. */
 static Resultado newton(double x)
 {
     Resultado r = {x, 0.0, 0, 0};
@@ -173,8 +164,7 @@ static Resultado newton(double x)
     printf("%s\n", ENC_ABIERTO);
     fila_abierto(0, x, 0.0, 0);
     for (int k = 1; k <= NMAX; ++k) {
-        /* COMPLETAR 4: la fórmula de Newton-Raphson, con f y fp. */
-        x_nuevo = 0.0;   /* <- sustituya 0.0 por la expresión correcta */
+        x_nuevo = x - f(x) / fp(x);
         ea = error_aprox(x_nuevo, x);
         x = x_nuevo;
         fila_abierto(k, x, ea, 1);
@@ -185,7 +175,6 @@ static Resultado newton(double x)
     return r;
 }
 
-/* Secante modificada: Newton con la derivada aproximada por una diferencia. */
 static Resultado secante_modificada(double x, double delta)
 {
     Resultado r = {x, 0.0, 0, 0};
@@ -195,8 +184,7 @@ static Resultado secante_modificada(double x, double delta)
     printf("%s\n", ENC_ABIERTO);
     fila_abierto(0, x, 0.0, 0);
     for (int k = 1; k <= NMAX; ++k) {
-        /* COMPLETAR 5: la pendiente es (f(x + delta) - f(x)) / delta. */
-        x_nuevo = 0.0;   /* <- sustituya 0.0 por la expresión correcta */
+        x_nuevo = x - (f(x) * delta) / (f(x + delta) - f(x));
         ea = error_aprox(x_nuevo, x);
         x = x_nuevo;
         fila_abierto(k, x, ea, 1);
