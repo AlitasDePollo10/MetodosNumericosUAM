@@ -6,13 +6,9 @@ por método y un resumen; las tablas deben coincidir, cifra por cifra, con las
 de raices.m, raices.c y las de las láminas.
 
 Python es la herramienta de verificación del curso: al final compara contra
-scipy.optimize.brentq y genera las gráficas. Las gráficas faltan:
-complete la función graficar().
+scipy.optimize.brentq y genera las gráficas.
 
-UEA 1151039 · Métodos Numéricos en Ingeniería · UAM Azcapotzalco · 26-O
-
-Dentro del contenedor, en la carpeta practica2:
-    python3 raices.py
+UEA 1151039 · Métodos Numéricos en Ingeniería · UAM Azcapotzalco
 """
 import math
 import os
@@ -205,22 +201,19 @@ def graficar(resultados, carpeta="img"):
     os.makedirs(carpeta, exist_ok=True)
 
     # -------------------------------------------------------------------------
-    # Figura 1: Gráfica de la función f(x) y las raíces encontradas
+    # Figura 1: f(c) y raíces encontradas
     # -------------------------------------------------------------------------
-    plt.figure(figsize=(9, 5))
+    plt.figure(figsize=(8, 5))
 
-    # Muestreo continuo de f(c) en el intervalo [A, B]
     puntos = 400
     x_vals = [A + i * (B - A) / (puntos - 1) for i in range(puntos)]
     y_vals = [f(x) for x in x_vals]
 
-    # Línea base f(c) y eje y = 0
-    plt.plot(x_vals, y_vals, label=r"$f(c)$", color="black", linewidth=1.5)
+    plt.plot(x_vals, y_vals, label="f(c)", color="black", linewidth=1.5)
     plt.axhline(0, color="gray", linestyle="--", linewidth=1.0)
 
-    # Marcar la raíz obtenida por cada método
-    marcadores = ["o", "s", "^", "D", "v"]
-    for r, marker in zip(resultados, marcadores):
+    estilos_marcadores = ["o", "s", "^", "D", "v"]
+    for r, marker in zip(resultados, estilos_marcadores):
         plt.plot(
             r["x"],
             f(r["x"]),
@@ -232,7 +225,7 @@ def graficar(resultados, carpeta="img"):
 
     plt.xlabel("c (kg/s)")
     plt.ylabel("f(c)")
-    plt.title("Raíces de la ecuación no lineal f(c) = 0")
+    plt.title("Ecuación no lineal f(c) = 0 y raíces obtenidas")
     plt.grid(True, linestyle=":", alpha=0.6)
     plt.legend(loc="best")
     plt.tight_layout()
@@ -240,12 +233,11 @@ def graficar(resultados, carpeta="img"):
     plt.close()
 
     # -------------------------------------------------------------------------
-    # Figura 2: Gráfica de convergencia (Error aproximado ea % vs Iteración k)
+    # Figura 2: Convergencia de error relativo aproximado ea (%) vs iteración k
     # -------------------------------------------------------------------------
-    plt.figure(figsize=(9, 5))
+    plt.figure(figsize=(8, 5))
 
-    for r, marker in zip(resultados, marcadores):
-        # Filtrar iteraciones válidas donde ea no sea None ni 0 (para escala log)
+    for r, marker in zip(resultados, estilos_marcadores):
         k_vals = []
         ea_vals = []
         for item in r["historia"]:
@@ -264,7 +256,6 @@ def graficar(resultados, carpeta="img"):
                 label=r["nombre"]
             )
 
-    # Línea horizontal de tolerancia objetivo
     plt.axhline(
         TOL,
         color="red",
@@ -274,15 +265,13 @@ def graficar(resultados, carpeta="img"):
     )
 
     plt.xlabel("Iteración (k)")
-    plt.ylabel(r"Error relativo aproximado $e_a$ (%)")
+    plt.ylabel("Error relativo aproximado $e_a$ (%)")
     plt.title("Convergencia del error aproximado por método")
     plt.grid(True, which="both", linestyle=":", alpha=0.6)
     plt.legend(loc="best")
     plt.tight_layout()
     plt.savefig(os.path.join(carpeta, "convergencia.png"), dpi=300)
     plt.close()
-
-    print(f"Figuras guardadas exitosamente en la carpeta '{carpeta}/'.")
 
 
 def main():
